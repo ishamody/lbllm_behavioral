@@ -11,6 +11,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.0"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
 
@@ -18,14 +19,12 @@
     body {
       font-family: sans-serif;
     }
-
     .sentence {
       font-size: 28px;
       line-height: 1.5;
       margin-bottom: 40px;
       text-align: center;
     }
-
     .question-title {
       font-size: 22px;
       margin-bottom: 20px;
@@ -36,16 +35,11 @@
 
 <body>
 <script>
-
 const jsPsych = initJsPsych();
-
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
-// =====================================
 // QUESTIONS
-// =====================================
-
 const questions = [
   {
     qnum: 1,
@@ -81,64 +75,36 @@ const questions = [
   }
 ];
 
-// =====================================
-// RANDOMIZE TAB ASSIGNMENTS
-// =====================================
-// Lists 1-8
+// Lists 1-8 and randomize
 let lists = [1,2,3,4,5,6,7,8];
-lists = jsPsych.randomization.shuffle(lists);
+// let randomized_lists = jsPsych.randomization.shuffle(lists);
+let randomized_lists = [6, 1, 2, 3, 4, 5, 7, 8]; //TODO, want to check if i fixed parsing
 // Randomize questions
 let randomized_questions = jsPsych.randomization.shuffle(questions);
 
 // Each tab gets:
 // - one random list
 // - one random question
-
 let tabAssignments = [];
-
 for (let i = 0; i < 8; i++) {
-
   tabAssignments.push({
-
     tab_number: i + 1,
-
-    list_number: lists[i],
-
+    list_number: randomized_lists[i],
     question: randomized_questions[i]
-
   });
 }
 
 // =====================================
 // LOAD CSV FILE
 // =====================================
-
 async function loadCSV(file) {
-
   const response = await fetch(file);
-
   const text = await response.text();
-
-  const rows = text.split('\n').slice(1);
-
-  return rows
-    .filter(r => r.trim() !== '')
-    .map(r => {
-
-      const cols = r.split(',');
-
-      return {
-
-        sentence_id: cols[0],
-
-        sentence: cols[1],
-
-        bucket: cols[2],
-
-        list_number: cols[3]
-
-      };
-    });
+  const parsed = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true
+  });
+  return parsed.data;
 }
 
 // =====================================
@@ -146,17 +112,11 @@ async function loadCSV(file) {
 // =====================================
 
 async function buildExperiment() {
-
   const timeline = [];
-
-  // =====================================
+  
   // START PAGE
-  // =====================================
-
   timeline.push({
-
     type: jsPsychHtmlButtonResponse,
-
     stimulus: `
       <h1>Sentence Rating Experiment</h1>
 
@@ -174,9 +134,7 @@ async function buildExperiment() {
         <li>Ratings from 1 to 7</li>
       </ul>
     `,
-
     choices: ['Start']
-
   });
 
   // =====================================
@@ -184,20 +142,13 @@ async function buildExperiment() {
   // =====================================
 
   for (const assignment of tabAssignments) {
-
     // Load list CSV
     const stimuli = await loadCSV(
-      `list_${assignment.list_number}.csv`
+      `stimuli/lists/list_${assignment.list_number}.csv`
     );
-
-    // =====================================
     // TAB INSTRUCTIONS
-    // =====================================
-
     timeline.push({
-
       type: jsPsychHtmlButtonResponse,
-
       stimulus: `
         <h2>
           Tab ${assignment.tab_number}
@@ -222,25 +173,17 @@ async function buildExperiment() {
           7 = most
         </p>
       `,
-
       choices: ['Begin']
-
     });
 
     // =====================================
     // SENTENCE TRIAL
     // =====================================
-
     const trial = {
-
       type: jsPsychSurveyLikert,
-
       questions: [
-
         {
-
           prompt: function() {
-
             return `
               <div class="sentence">
                 ${jsPsych.timelineVariable('sentence')}
@@ -251,7 +194,6 @@ async function buildExperiment() {
               </div>
             `;
           },
-
           labels: [
             '1',
             '2',
@@ -261,74 +203,68 @@ async function buildExperiment() {
             '6',
             '7'
           ],
-
           required: true
         }
-
       ],
-
       data: {
-
         participant_id: subject_id,
-
         tab_number: assignment.tab_number,
-
         assigned_list: assignment.list_number,
-
-        assigned_question_number:
-          assignment.question.qnum,
-
-        assigned_question_text:
-          assignment.question.label,
-
-        sentence_id:
-          jsPsych.timelineVariable('sentence_id'),
-
-        sentence:
-          jsPsych.timelineVariable('sentence'),
-
-        bucket:
-          jsPsych.timelineVariable('bucket')
+        assigned_question_number: assignment.question.qnum,
+        assigned_question_text: assignment.question.label,
+        sentence_id: jsPsych.timelineVariable('sentence_id'),
+        sentence: jsPsych.timelineVariable('sentence'),
+        bucket: jsPsych.timelineVariable('bucket')
       },
 
+      //FOR TESTING WE'LL HAVE LOGS AS BELOW
       on_finish: function(data) {
+        const responses =
+        typeof data.responses === "string"
+        ? JSON.parse(data.responses)
+        : data.responses;
+        const rating = responses?.Q0 ?? null;
+        data.rating = rating;
 
-        // Convert response to 1-7
+        // TESTING get a preview of a row
+        const rowPreview = {
+          participant_id: data.participant_id,
+          tab_number: data.tab_number,
+          assigned_list: data.assigned_list,
+          assigned_question_number: data.assigned_question_number,
+          assigned_question_text: data.assigned_question_text,
+          sentence_id: data.sentence_id,
+          sentence: data.sentence,
+          bucket: data.bucket,
+          rating: rating
+        };
+        // ---- LOG IT ----
+        console.log("========== SENTENCE TRIAL ==========");
+        console.table(rowPreview);
+        console.log("CSV ROW FORMAT:");
+        console.log(Object.values(rowPreview).join(","));
+        }
 
-        data.rating =
-          JSON.parse(data.responses).Q0 + 1;
-      }
-    };
-
-    // =====================================
-    // ADD 100 SENTENCE TRIALS
-    // =====================================
-
-    timeline.push({
-
-      timeline: [trial],
-
-      timeline_variables: stimuli,
-
-      randomize_order: true
-
-    });
-  }
+            };
+            // =====================================
+            // ADD 100 SENTENCE TRIALS
+            // =====================================
+            timeline.push({
+              timeline: [trial],
+              timeline_variables: stimuli,
+              randomize_order: false
+            });
+          }
 
   // =====================================
   // SAVE DATA
   // =====================================
 
   timeline.push({
-
     type: jsPsychPipe,
-
     action: 'save',
-
-    experiment_id: 'YOUR_PIPE_ID_HERE',
-
+    experiment_id: 'YOUR_PIPE_ID_HERE', //TODO
     filename: filename,
-
     data_string: () =>
       jsPsych.data.get().csv()
   });
@@ -338,9 +274,7 @@ async function buildExperiment() {
   // =====================================
 
   timeline.push({
-
     type: jsPsychHtmlButtonResponse,
-
     stimulus: `
       <h2>
         Finished
@@ -350,11 +284,8 @@ async function buildExperiment() {
         Thank you for participating.
       </p>
     `,
-
     choices: ['Finish']
-
   });
-
   jsPsych.run(timeline);
 }
 
