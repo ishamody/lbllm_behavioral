@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sentence Rating Experiment</title>
+
+  <!-- jsPsych -->
+  <script src="https://unpkg.com/jspsych@7.3.4"></script>
+
+  <!-- Plugins -->
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .sentence {
+      font-size: 28px;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .question-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<script>
+const jsPsych = initJsPsych();
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
+
+// QUESTIONS
+const questions = [
+  {
+    qnum: 1,
+    label: 'How much does the sentence make sense?'
+  },
+  {
+    qnum: 2,
+    label: 'How easy is the sentence to visualize, or to form an image of the sentence’s meaning in your mind?'
+  },
+  {
+    qnum: 3,
+    label: 'How likely do you think you are to encounter this sentence?'
+  },
+  {
+    qnum: 4,
+    label: 'How much does the sentence make you feel happy, pleased, content, and/or hopeful?'
+  },
+  {
+    qnum: 5,
+    label: 'How much does the sentence make you feel stimulated, excited, frenzied, wide-awake, and/or aroused?'
+  },
+  {
+    qnum: 6,
+    label: 'How much does the sentence make you think of other people’s experiences, thoughts, beliefs, desires, and/or emotions?'
+  },
+  {
+    qnum: 7,
+    label: 'How much does the sentence make you think of physical objects and/or physical causal interactions?'
+  },
+  {
+    qnum: 8,
+    label: 'How much does the sentence make you think of places, natural scenes and/or environments?'
+  }
+];
+
+// Lists 1-8 and randomize
+let lists = [1,2,3,4,5,6,7,8];
+// let randomized_lists = jsPsych.randomization.shuffle(lists);
+let randomized_lists = [6, 1, 2, 3, 4, 5, 7, 8]; //TODO, want to check if i fixed parsing
+// Randomize questions
+let randomized_questions = jsPsych.randomization.shuffle(questions);
+
+// Each tab gets:
+// - one random list
+// - one random question
+let tabAssignments = [];
+for (let i = 0; i < 8; i++) {
+  tabAssignments.push({
+    tab_number: i + 1,
+    list_number: randomized_lists[i],
+    question: randomized_questions[i]
+  });
+}
+
+// =====================================
+// LOAD CSV FILE
+// =====================================
+async function loadCSV(file) {
+  const response = await fetch(file);
+  const text = await response.text();
+  const parsed = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true
+  });
+  return parsed.data;
+}
+
+// =====================================
+// BUILD EXPERIMENT
+// =====================================
+
+async function buildExperiment() {
+  const timeline = [];
+  
+  // START PAGE
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h1>Sentence Rating Experiment</h1>
+
+      <p>
+        You will complete 8 sections.
+      </p>
+
+      <p>
+        Each section contains:
+      </p>
+
+      <ul>
+        <li>100 sentences</li>
+        <li>1 rating question</li>
+        <li>Ratings from 1 to 7</li>
+      </ul>
+    `,
+    choices: ['Start']
+  });
+
+  // =====================================
+  // LOOP THROUGH 8 TABS
+  // =====================================
+
+  for (const assignment of tabAssignments) {
+    // Load list CSV
+    const stimuli = await loadCSV(
+      `stimuli/lists/list_${assignment.list_number}.csv`
+    );
+    // TAB INSTRUCTIONS
+    timeline.push({
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <h2>
+          Tab ${assignment.tab_number}
+        </h2>
+
+        <p>
+          For the following sentences,
+          answer this question:
+        </p>
+
+        <div class="question-title">
+          ${assignment.question.label}
+        </div>
+
+        <p>
+          Use a scale from:
+        </p>
+
+        <p>
+          1 = least
+          <br>
+          7 = most
+        </p>
+      `,
+      choices: ['Begin']
+    });
+
+    // =====================================
+    // SENTENCE TRIAL
+    // =====================================
+    const trial = {
+      type: jsPsychSurveyLikert,
+      questions: [
+        {
+          prompt: function() {
+            return `
+              <div class="sentence">
+                ${jsPsych.timelineVariable('sentence')}
+              </div>
+
+              <div class="question-title">
+                ${assignment.question.label}
+              </div>
+            `;
+          },
+          labels: [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7'
+          ],
+          required: true
+        }
+      ],
+      data: {
+        participant_id: subject_id,
+        tab_number: assignment.tab_number,
+        assigned_list: assignment.list_number,
+        assigned_question_number: assignment.question.qnum,
+        assigned_question_text: assignment.question.label,
+        sentence_id: jsPsych.timelineVariable('sentence_id'),
+        sentence: jsPsych.timelineVariable('sentence'),
+        bucket: jsPsych.timelineVariable('bucket')
+      },
+
+      //FOR TESTING WE'LL HAVE LOGS AS BELOW
+      on_finish: function(data) {
+        const responses =
+        typeof data.responses === "string"
+        ? JSON.parse(data.responses)
+        : data.responses;
+        const rating = responses?.Q0 ?? null;
+        data.rating = rating;
+
+        // TESTING get a preview of a row
+        const rowPreview = {
+          participant_id: data.participant_id,
+          tab_number: data.tab_number,
+          assigned_list: data.assigned_list,
+          assigned_question_number: data.assigned_question_number,
+          assigned_question_text: data.assigned_question_text,
+          sentence_id: data.sentence_id,
+          sentence: data.sentence,
+          bucket: data.bucket,
+          rating: rating
+        };
+        // ---- LOG IT ----
+        console.log("========== SENTENCE TRIAL ==========");
+        console.table(rowPreview);
+        console.log("CSV ROW FORMAT:");
+        console.log(Object.values(rowPreview).join(","));
+        }
+
+            };
+            // =====================================
+            // ADD 100 SENTENCE TRIALS
+            // =====================================
+            timeline.push({
+              timeline: [trial],
+              timeline_variables: stimuli,
+              randomize_order: false
+            });
+          }
+
+  // =====================================
+  // SAVE DATA
+  // =====================================
+
+  timeline.push({
+    type: jsPsychPipe,
+    action: 'save',
+    experiment_id: 'YOUR_PIPE_ID_HERE', //TODO
+    filename: filename,
+    data_string: () =>
+      jsPsych.data.get().csv()
+  });
+
+  // =====================================
+  // END SCREEN
+  // =====================================
+
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h2>
+        Finished
+      </h2>
+
+      <p>
+        Thank you for participating.
+      </p>
+    `,
+    choices: ['Finish']
+  });
+  jsPsych.run(timeline);
+}
+
+buildExperiment();
+
+</script>
+</body>
+</html>

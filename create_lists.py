@@ -10,6 +10,7 @@ df = pd.read_excel(input_file)
 # Keep only first 800 sentence IDs, so no word lists
 df['sentence_id'] = pd.to_numeric(df['sentence_id'], errors='coerce') #convert string to numbers
 df = df[df['sentence_id'] <= 800]
+df['sentence_id'] = df['sentence_id'].astype('Int64').astype(str)
 
 # Keep only rows with actual sentences
 ndf = df[['sentence_id', 'sentence', 'bucket']].dropna(subset=['sentence'])

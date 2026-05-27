@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sentence Rating Experiment</title>
+
+  <!-- jsPsych -->
+  <script src="https://unpkg.com/jspsych@7.3.4"></script>
+
+  <!-- Plugins -->
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.1.0"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
+  <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    .sentence {
+      font-size: 28px;
+      line-height: 1.5;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .question-title {
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<script>
+const jsPsych = initJsPsych();
+const subject_id = jsPsych.randomization.randomID(10);
+
+// EXPERIMENT QUESTION
+const experiment_question = {
+  qnum: 8,
+  label: 'How likely do you think you are to encounter this sentence?',
+  left_label: 'not at all likely',
+  right_label: 'very likely'
+};
+
+// RANDOMLY ASSIGN ONE LIST
+const assigned_list = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7,8],1)[0];
+const filename = `q${experiment_question.qnum}_${subject_id}.csv`;
+
+// LOAD CSV
+async function loadCSV(file) {
+  const response = await fetch(file);
+  const text = await response.text();
+  const parsed = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true
+  });
+  return parsed.data;
+}
+
+// BUILD EXPERIMENT
+async function buildExperiment() {
+  const timeline = [];
+  // LOAD STIMULI
+  const stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
+
+  // START SCREEN
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h1>Exp8: Sentence Rating Experiment</h1>
+
+      <p>
+        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence according to how likely you think you are to encounter this sentence on a scale from 1 (not at all likely) to 7 (very likely).
+      </p>
+
+      <p>
+        For example, sentences like “I want my coffee black, please.” or “What time is our meeting?” are quite common, so you might rate them as a 6 or a 7. In contrast, sentences like “The man measures the height of the tripod.” or “Five prophets from Egypt were present.” are not, so you might rate them as a 1 or a 2.
+      </p>
+    `,
+    choices: ['Start']
+  });
+
+  // BUILD TRIAL LIST + ATTENTION CHECKS
+  const fullTimelineVariables = [];
+
+  for (let i = 0; i < stimuli.length; i++) {
+    fullTimelineVariables.push(stimuli[i]);
+    // attention checks after 20, 40, 60
+    if ([19, 39, 59].includes(i)) {
+      const correct_number = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7], 1)[0];
+      fullTimelineVariables.push({
+        sentence_id: `attention_check_${i+1}`,
+        sentence:
+          `This is an attention check. Please click ${correct_number}.`,
+        bucket: 'attention_check',
+        correct_response: correct_number
+      });
+    }
+  }
+
+  // SENTENCE TRIAL
+  const trial = {
+    type: jsPsychSurveyLikert,
+    questions: [
+      {
+        prompt: function() {
+          return `
+            <div class="sentence">
+              ${jsPsych.timelineVariable('sentence')}
+            </div>
+            <div class="question-title">
+              ${experiment_question.label}
+            </div>
+          `;
+        },
+        labels: [
+          `1<br>${experiment_question.left_label}`,
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          `7<br>${experiment_question.right_label}`
+        ],
+        required: true
+      }
+    ],
+
+    data: {
+      participant_id: subject_id,
+      assigned_list: assigned_list,
+      assigned_question_number: experiment_question.qnum,
+      assigned_question_text: experiment_question.label,
+      sentence_id: jsPsych.timelineVariable('sentence_id'),
+      sentence: jsPsych.timelineVariable('sentence'),
+      bucket: jsPsych.timelineVariable('bucket'),
+      correct_response: jsPsych.timelineVariable('correct_response')
+    },
+
+    on_finish: function(data) {
+      // jsPsych stores likert as 0-6
+      // convert to 1-7
+      let rating = null;
+      if (data.response && data.response.Q0 != null) {
+        rating = data.response.Q0 + 1;
+      }
+
+      data.rating = rating;
+      // attention check scoring
+
+      if (data.bucket === 'attention_check') {
+        data.attention_check_correct = rating === Number(data.correct_response);
+      } else {
+        data.attention_check_correct = null;
+      }
+
+      // debug logging
+      const rowPreview = {
+        participant_id: data.participant_id,
+        assigned_list: data.assigned_list,
+        assigned_question_number: data.assigned_question_number,
+        assigned_question_text: data.assigned_question_text,
+        sentence_id: data.sentence_id,
+        sentence: data.sentence,
+        bucket: data.bucket,
+        correct_response: data.correct_response,
+        rating: data.rating,
+        attention_check_correct: data.attention_check_correct
+      };
+
+      console.log(
+        '========== SENTENCE TRIAL =========='
+      );
+
+      console.table(rowPreview);
+
+      console.log('CSV ROW FORMAT:');
+
+      console.log(
+        Object.values(rowPreview).join(',')
+      );
+    }
+  };
+
+  // ADD TRIALS
+  timeline.push({
+    timeline: [trial],
+    timeline_variables: fullTimelineVariables,
+    randomize_order: false
+  });
+
+  // SAVE DATA
+  timeline.push({
+    type: jsPsychPipe,
+    action: 'save',
+    experiment_id: 'YOUR_PIPE_ID_HERE', //TODO
+    filename: filename,
+    data_string: () =>
+      jsPsych.data.get().csv()
+  });
+
+  
+  // END SCREEN
+  timeline.push({
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `
+      <h2>Finished</h2>
+      <p>
+        Thank you for participating.
+      </p>
+    `,
+    choices: ['Finish']
+  });
+  jsPsych.run(timeline);
+}
+
+buildExperiment();
+
+</script>
+
+</body>
+</html>
