@@ -37,6 +37,7 @@
 <script>
 const jsPsych = initJsPsych();
 const subject_id = jsPsych.randomization.randomID(10);
+const is_test = true;
 
 // EXPERIMENT QUESTION
 const experiment_question = {
@@ -64,8 +65,13 @@ async function loadCSV(file) {
 // BUILD EXPERIMENT
 async function buildExperiment() {
   const timeline = [];
+  let stimuli;
   // LOAD STIMULI
-  const stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
+  if (is_test){
+    stimuli = await loadCSV(`stimuli/lists/test_list.csv`);
+  } else {
+    stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
+  }
 
   // START SCREEN
   timeline.push({
@@ -89,17 +95,23 @@ async function buildExperiment() {
 
   for (let i = 0; i < stimuli.length; i++) {
     fullTimelineVariables.push(stimuli[i]);
-    // attention checks after 20, 40, 60
-    if ([19, 39, 59].includes(i)) {
+    let attention_check_indices;
+    if (is_test){
+      attention_check_indices = [1, 4, 8];
+    } else{
+      // attention checks after 20, 40, 60 //
+      attention_check_indices = [19, 39, 59];
+    }
+    if (attention_check_indices.includes(i)) {
       const correct_number = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7], 1)[0];
       fullTimelineVariables.push({
         sentence_id: `attention_check_${i+1}`,
-        sentence:
-          `This is an attention check. Please click ${correct_number}.`,
+        sentence:`This is an attention check. Please click ${correct_number}.`,
         bucket: 'attention_check',
         correct_response: correct_number
       });
     }
+    //attention checks part over
   }
 
   // SENTENCE TRIAL
@@ -151,7 +163,6 @@ async function buildExperiment() {
 
       data.rating = rating;
       // attention check scoring
-
       if (data.bucket === 'attention_check') {
         data.attention_check_correct = rating === Number(data.correct_response);
       } else {
