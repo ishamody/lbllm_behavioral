@@ -67,6 +67,51 @@ async function buildExperiment() {
   // LOAD STIMULI
   const stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
 
+  // CONSENT
+  timeline.push({
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <div style="max-width:900px; text-align:left; margin:auto;">
+          <p>
+            You are participating in a study about language and related cognitive abilities
+            being conducted by Professor Evelina Fedorenko from the Department of Brain and
+            Cognitive Sciences at MIT. If you have questions or concerns, you can contact
+            Professor Fedorenko by email (evelina9@mit.edu).
+          </p>
+
+          <p>
+            Your participation in this research is voluntary. You may decline to answer
+            any or all of the following questions. You may decline further participation,
+            at any time, without adverse consequences.
+          </p>
+
+          <p>
+            Your anonymity is assured; the researchers who have requested your participation
+            will not receive any personal information about you.
+          </p>
+
+          <p>
+            The only restriction to being paid
+            is achieving the accuracy requirements as detailed in the task instructions
+            (to block "bots" who answer randomly).
+          </p>
+
+          <p><strong>I agree to take part in this study.</strong></p>
+        </div>
+      `,
+      choices: [
+        "I Agree",
+        "I Do Not Agree"
+      ],
+      on_finish: function(data) {
+        if (data.response === 1) {
+          jsPsych.endExperiment(
+            "You chose not to participate. You may now close this window."
+          );
+        }
+      }
+    });
+    
   // START SCREEN
   timeline.push({
     type: jsPsychHtmlButtonResponse,
@@ -197,7 +242,7 @@ async function buildExperiment() {
   timeline.push({
     type: jsPsychPipe,
     action: 'save',
-    experiment_id: 'YOUR_PIPE_ID_HERE', //TODO
+    experiment_id: 'PV4am1NwjDYl', //TODO
     filename: filename,
     data_string: () =>
       jsPsych.data.get().csv()
