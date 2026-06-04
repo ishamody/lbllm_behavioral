@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.0"></script>
 
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
 
@@ -36,8 +37,9 @@
 <body>
 <script>
 const jsPsych = initJsPsych();
-const subject_id = jsPsych.randomization.randomID(10);
-const is_test = true;
+let prolific_id = "";
+let filename = "";
+const is_test = false;
 
 // EXPERIMENT QUESTION
 const experiment_question = {
@@ -49,7 +51,6 @@ const experiment_question = {
 
 // RANDOMLY ASSIGN ONE LIST
 const assigned_list = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7,8],1)[0];
-const filename = `q${experiment_question.qnum}_${subject_id}.csv`;
 
 // LOAD CSV
 async function loadCSV(file) {
@@ -65,6 +66,26 @@ async function loadCSV(file) {
 // BUILD EXPERIMENT
 async function buildExperiment() {
   const timeline = [];
+  // PROLIFIC ID
+  timeline.push({
+    type: jsPsychSurveyText,
+    questions: [
+      {
+        prompt: "Please copy and paste your Prolific ID below.",
+        required: true
+      }
+    ],
+    button_label: "Continue",
+    on_finish: function(data) {
+      prolific_id = data.response.Q0.trim();
+
+      filename = `q${experiment_question.qnum}_${prolific_id}.csv`;
+
+      jsPsych.data.addProperties({
+        prolific_id: prolific_id
+      });
+    }
+  });
   let stimuli;
   // LOAD STIMULI
   if (is_test){
@@ -122,14 +143,14 @@ async function buildExperiment() {
   timeline.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-      <h1>Exp1: Sentence Rating Experiment</h1>
+      <h1>Sentence Rating: Plausibility</h1>
 
       <p>
-        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence for whether it makes sense on a scale from 1 (does not make any sense) to 7 (makes perfect sense).
+        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence for <strong>whether it makes sense</strong> on a scale from 1 (does not make any sense) to 7 (makes perfect sense).
       </p>
 
       <p>
-        For example, a sentence like “The father had to buy some new fishing equipment for his trip” makes sense, so you might rate it as a 6 or 7. In contrast, a sentence like “The window attacked an inflated red kitten after the long opera surfaced” does not really make any sense, so you might rate it as a 1 or 2. Some sentences may fall somewhere in between: for example, “The tired traveller sat down on the book to have a drink of silver” so you might rate them as a 3 or 4.
+        For example, a sentence like <i>“The father had to buy some new fishing equipment for his trip”</i> makes sense, so you might rate it as a 6 or 7. In contrast, a sentence like <i>“The window attacked an inflated red kitten after the long opera surfaced”</i> does not really make any sense, so you might rate it as a 1 or 2. Some sentences may fall somewhere in between: for example, <i>“The tired traveller sat down on the book to have a drink of silver”</i> so you might rate them as a 3 or 4.
       </p>
     `,
     choices: ['Start']
@@ -188,7 +209,7 @@ async function buildExperiment() {
     ],
 
     data: {
-      participant_id: subject_id,
+      participant_id: prolific_id,
       assigned_list: assigned_list,
       assigned_question_number: experiment_question.qnum,
       assigned_question_text: experiment_question.label,
@@ -268,6 +289,11 @@ async function buildExperiment() {
       <p>
         Thank you for participating.
       </p>
+      <p>Your completion code is:</p>
+
+      <h1>CQG69N1A</h1>
+
+      <p>Please copy this code and submit it to receive credit/payment.</p>
     `,
     choices: ['Finish']
   });
