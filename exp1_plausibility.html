@@ -39,7 +39,7 @@
 const jsPsych = initJsPsych();
 let prolific_id = "";
 let filename = "";
-const is_test = false;
+const is_test = true;
 
 // EXPERIMENT QUESTION
 const experiment_question = {
@@ -79,7 +79,7 @@ async function buildExperiment() {
     on_finish: function(data) {
       prolific_id = data.response.Q0.trim();
 
-      filename = `q${experiment_question.qnum}_${prolific_id}.csv`;
+      filename = `q${experiment_question.qnum}_list${assigned_list}_${prolific_id}.csv`;
 
       jsPsych.data.addProperties({
         prolific_id: prolific_id
@@ -152,6 +152,10 @@ async function buildExperiment() {
       <p>
         For example, a sentence like <i>“The father had to buy some new fishing equipment for his trip”</i> makes sense, so you might rate it as a 6 or 7. In contrast, a sentence like <i>“The window attacked an inflated red kitten after the long opera surfaced”</i> does not really make any sense, so you might rate it as a 1 or 2. Some sentences may fall somewhere in between: for example, <i>“The tired traveller sat down on the book to have a drink of silver”</i> so you might rate them as a 3 or 4.
       </p>
+
+      <p>
+      There will also be a few attention checks. Please select the rating indicated in the prompt.
+      </p>
     `,
     choices: ['Start']
   });
@@ -163,7 +167,7 @@ async function buildExperiment() {
     fullTimelineVariables.push(stimuli[i]);
     let attention_check_indices;
     if (is_test){
-      attention_check_indices = [1, 4, 8];
+      attention_check_indices = [1];
     } else{
       // attention checks after 20, 40, 60 //
       attention_check_indices = [19, 39, 59];
@@ -269,13 +273,15 @@ async function buildExperiment() {
     timeline_variables: fullTimelineVariables,
     randomize_order: false
   });
+  
+  console.log("Saving filename:", filename);
 
   // SAVE DATA
   timeline.push({
     type: jsPsychPipe,
     action: 'save',
     experiment_id: 'PV4am1NwjDYl', //TODO from datapipe
-    filename: filename,
+    filename: () => filename,
     data_string: () =>
       jsPsych.data.get().csv()
   });
