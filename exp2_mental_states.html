@@ -80,6 +80,7 @@ async function buildExperiment() {
       prolific_id = data.response.Q0.trim();
 
       filename = `q${experiment_question.qnum}_list${assigned_list}_${prolific_id}.csv`;
+      console.log("name of file:", filename);
 
       jsPsych.data.addProperties({
         prolific_id: prolific_id
