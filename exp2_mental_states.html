@@ -36,6 +36,8 @@
 <body>
 <script>
 const jsPsych = initJsPsych();
+let prolific_id = "";
+let filename = "";
 const subject_id = jsPsych.randomization.randomID(10);
 
 // EXPERIMENT QUESTION
@@ -46,9 +48,8 @@ const experiment_question = {
   right_label: 'very much'
 };
 
-// RANDOMLY ASSIGN ONE LIST
-const assigned_list = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7,8],1)[0];
-const filename = `q${experiment_question.qnum}_${subject_id}.csv`;
+// assigned list 1
+const assigned_list = 1;
 
 // LOAD CSV
 async function loadCSV(file) {
@@ -64,6 +65,26 @@ async function loadCSV(file) {
 // BUILD EXPERIMENT
 async function buildExperiment() {
   const timeline = [];
+  // PROLIFIC ID
+  timeline.push({
+    type: jsPsychSurveyText,
+    questions: [
+      {
+        prompt: "Please copy and paste your Prolific ID below.",
+        required: true
+      }
+    ],
+    button_label: "Continue",
+    on_finish: function(data) {
+      prolific_id = data.response.Q0.trim();
+
+      filename = `q${experiment_question.qnum}_list${assigned_list}_${prolific_id}.csv`;
+
+      jsPsych.data.addProperties({
+        prolific_id: prolific_id
+      });
+    }
+  });
   // LOAD STIMULI
   const stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
   // CONSENT
@@ -114,14 +135,17 @@ async function buildExperiment() {
   timeline.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
-      <h1>Exp2: Sentence Rating Experiment</h1>
+      <h1>Sentence Rating Experiment: Mental States</h1>
 
       <p>
-        In this survey, you will be asked to read and evaluate 100 sentences. We would like you to rate each sentence according to how much it made you think of other people’s experiences, thoughts, beliefs, desires, and/or emotions on a scale from 1 (not at all) to 7 (very much).
+        In this survey, you will be asked to read and evaluate 100 sentences. We would like you to rate each sentence according to <strong>how much it made you think of other people's experiences, thoughts, beliefs, desires, and/or emotions</strong> on a scale from 1 (not at all) to 7 (very much).
       </p>
 
       <p>
-        For example, sentences like “The woman wondered what made him jealous.” or “I was so angry that I hit the door.” have meanings that are related to other people’s states of mind and emotions so you might rate them as a 6 or a 7. In contrast, sentences like “A car drove into the parking garage.” or “Most of earth’s surface is covered by water.” do not, so you might rate them as a 1 or a 2.
+        For example, sentences like “The woman wondered what made him jealous.” or “I was so angry that I hit the door.” have meanings that are related to other people's states of mind and emotions so you might rate them as a 6 or a 7. In contrast, sentences like “A car drove into the parking garage.” or “Most of earth’s surface is covered by water.” do not, so you might rate them as a 1 or a 2.
+      </p>
+      <p>
+      There will also be a few attention checks. Please select the rating indicated in the prompt.
       </p>
     `,
     choices: ['Start']
@@ -174,7 +198,7 @@ async function buildExperiment() {
     ],
 
     data: {
-      participant_id: subject_id,
+      participant_id: prolific_id,
       assigned_list: assigned_list,
       assigned_question_number: experiment_question.qnum,
       assigned_question_text: experiment_question.label,
@@ -236,11 +260,13 @@ async function buildExperiment() {
     randomize_order: false
   });
 
+  console.log("Saving filename:", filename);
+
   // SAVE DATA
   timeline.push({
     type: jsPsychPipe,
     action: 'save',
-    experiment_id: 'PV4am1NwjDYl', //TODO
+    experiment_id: 'PV4am1NwjDYl',
     filename: filename,
     data_string: () =>
       jsPsych.data.get().csv()
@@ -255,6 +281,11 @@ async function buildExperiment() {
       <p>
         Thank you for participating.
       </p>
+      <p>Your completion code is:</p>
+
+      <h1> !!!!!!!</h1>
+
+      <p>Please copy this code and submit it to receive credit/payment.</p>
     `,
     choices: ['Finish']
   });
