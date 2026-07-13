@@ -279,7 +279,7 @@ async function buildExperiment() {
     type: jsPsychPipe,
     action: 'save',
     experiment_id: 'PV4am1NwjDYl', //TODO
-    ilename: () =>  filename, //important
+    filename: () =>  filename, //important
     data_string: () =>
       jsPsych.data.get().csv()
   });
