@@ -1,0 +1,149 @@
+"rt","response","trial_type","trial_index","time_elapsed","internal_node_id","prolific_id","stimulus","question_order","participant_id","assigned_list","assigned_question_number","assigned_question_text","sentence_id","sentence","bucket","correct_response","rating","attention_check_correct"
+"23264","{""Q0"":""659c067de92634488b349626""}","survey-text","0","23273","0.0-0.0","659c067de92634488b349626","","","","","","","","","","","",""
+"24708","0","html-button-response","1","47984","0.0-1.0","659c067de92634488b349626","
+        <div style=""max-width:900px; text-align:left; margin:auto;"">
+          <p>
+            You are participating in a study about language and related cognitive abilities
+            being conducted by Professor Evelina Fedorenko from the Department of Brain and
+            Cognitive Sciences at MIT. If you have questions or concerns, you can contact
+            Professor Fedorenko by email (evelina9@mit.edu).
+          </p>
+
+          <p>
+            Your participation in this research is voluntary. You may decline to answer
+            any or all of the following questions. You may decline further participation,
+            at any time, without adverse consequences.
+          </p>
+
+          <p>
+            Your anonymity is assured; the researchers who have requested your participation
+            will not receive any personal information about you.
+          </p>
+
+          <p>
+            The only restriction to being paid
+            is achieving the accuracy requirements as detailed in the task instructions
+            (to block ""bots"" who answer randomly).
+          </p>
+
+          <p><strong>I agree to take part in this study.</strong></p>
+        </div>
+      ","","","","","","","","","","",""
+"9488","0","html-button-response","2","57474","0.0-2.0","659c067de92634488b349626","
+      <h1>Sentence Rating: Plausibility</h1>
+
+      <p>
+        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence for <strong>whether it makes sense</strong> on a scale from 1 (does not make any sense) to 7 (makes perfect sense).
+      </p>
+
+      <p>
+        For example, a sentence like <i>“The father had to buy some new fishing equipment for his trip”</i> makes sense, so you might rate it as a 6 or 7. In contrast, a sentence like <i>“The window attacked an inflated red kitten after the long opera surfaced”</i> does not really make any sense, so you might rate it as a 1 or 2. Some sentences may fall somewhere in between: for example, <i>“The tired traveller sat down on the book to have a drink of silver”</i> so you might rate them as a 3 or 4.
+      </p>
+
+      <p>
+      There will also be a few attention checks. Please select the rating indicated in the prompt.
+      </p>
+    ","","","","","","","","","","",""
+"6734","{""Q0"":4}","survey-likert","3","64210","0.0-3.0-0.0","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","377","Surely, he cannot be jealous of the baby?","3.25-4.25","","5","null"
+"4624","{""Q0"":4}","survey-likert","4","68837","0.0-3.0-0.1","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","696","Relief swept through her when she found one.",">5.25","","5","null"
+"7048","{""Q0"":5}","survey-likert","5","75889","0.0-3.0-0.2","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","404","There is a little white at the base.","3.25-4.25","","6","null"
+"4920","{""Q0"":5}","survey-likert","6","80811","0.0-3.0-0.3","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","398","What did you put for your best feature?","3.25-4.25","","6","null"
+"2632","{""Q0"":6}","survey-likert","7","83447","0.0-3.0-0.4","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","81","I want you to have a good time.","<2.25","","7","null"
+"2431","{""Q0"":5}","survey-likert","8","85880","0.0-3.0-0.5","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","42","It's the logical thing to do, isn't it?","<2.25","","6","null"
+"3620","{""Q0"":5}","survey-likert","9","89502","0.0-3.0-0.6","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","145","Truth is, I don't know what to say.","<2.25","","6","null"
+"3361","{""Q0"":4}","survey-likert","10","92864","0.0-3.0-0.7","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","55","You were right, you were right all along.","<2.25","","5","null"
+"4940","{""Q0"":4}","survey-likert","11","97806","0.0-3.0-0.8","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","657","A bead of sweat rolled down Wayne's forehead.",">5.25","","5","null"
+"2524","{""Q0"":5}","survey-likert","12","100332","0.0-3.0-0.9","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","159","That's exactly what I want you to do.","<2.25","","6","null"
+"3519","{""Q0"":4}","survey-likert","13","103853","0.0-3.0-0.10","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","471","It seems the rumors were not far off.","3.25-4.25","","5","null"
+"4027","{""Q0"":4}","survey-likert","14","107882","0.0-3.0-0.11","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","668","Elizabeth was sorting jars and tins of food.",">5.25","","5","null"
+"4070","{""Q0"":4}","survey-likert","15","111955","0.0-3.0-0.12","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","286","Did you see an animal of any kind?","2.25-3.25","","5","null"
+"2934","{""Q0"":4}","survey-likert","16","114891","0.0-3.0-0.13","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","258","I wonder how long I have been away.","2.25-3.25","","5","null"
+"3870","{""Q0"":4}","survey-likert","17","118764","0.0-3.0-0.14","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","582","Then, she filled a bucket for her horse.","4.25-5.25","","5","null"
+"2243","{""Q0"":5}","survey-likert","18","121009","0.0-3.0-0.15","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","202","He'd want to know as soon as possible.","2.25-3.25","","6","null"
+"2954","{""Q0"":6}","survey-likert","19","123965","0.0-3.0-0.16","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","193","I was supposed to be doing something else.","2.25-3.25","","7","null"
+"3591","{""Q0"":2}","survey-likert","20","127559","0.0-3.0-0.17","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","522","Expensive furniture and paintings filled room after room.","4.25-5.25","","3","null"
+"3608","{""Q0"":3}","survey-likert","21","131169","0.0-3.0-0.18","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","498","Very little is known about his sumo career.","4.25-5.25","","4","null"
+"3163","{""Q0"":5}","survey-likert","22","134334","0.0-3.0-0.19","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","23","May I buy you a cup of coffee?","<2.25","","6","null"
+"2861","{""Q0"":3}","survey-likert","23","137197","0.0-3.0-0.20","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","attention_check_20","This is an attention check. Please click 4.","attention_check","4","4","true"
+"3429","{""Q0"":4}","survey-likert","24","140628","0.0-3.0-0.21","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","331","Was there anything left for me to find?","3.25-4.25","","5","null"
+"2257","{""Q0"":5}","survey-likert","25","142888","0.0-3.0-0.22","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","38","Are you sure you want to see it?","<2.25","","6","null"
+"6461","{""Q0"":1}","survey-likert","26","149350","0.0-3.0-0.23","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","367","When you are down, your money is sad.","3.25-4.25","","2","null"
+"6300","{""Q0"":3}","survey-likert","27","155653","0.0-3.0-0.24","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","678","My lungs felt dusty from all the books.",">5.25","","4","null"
+"2786","{""Q0"":4}","survey-likert","28","158440","0.0-3.0-0.25","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","248","Slowly I was getting used to the dark.","2.25-3.25","","5","null"
+"4717","{""Q0"":0}","survey-likert","29","163159","0.0-3.0-0.26","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","504","Slowly, a faint energy signature started to resonate.","4.25-5.25","","1","null"
+"2586","{""Q0"":5}","survey-likert","30","165747","0.0-3.0-0.27","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","58","Hey, what do you think of these boots?","<2.25","","6","null"
+"5726","{""Q0"":1}","survey-likert","31","171475","0.0-3.0-0.28","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","689","The absence of water dripping indicated a column.",">5.25","","2","null"
+"2583","{""Q0"":5}","survey-likert","32","174061","0.0-3.0-0.29","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","247","I didn't want to say goodbye to anyone.","2.25-3.25","","6","null"
+"3601","{""Q0"":5}","survey-likert","33","177663","0.0-3.0-0.30","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","45","Yes, this is what I wanted to say.","<2.25","","6","null"
+"4076","{""Q0"":4}","survey-likert","34","181742","0.0-3.0-0.31","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","515","Here is the six month's increase in advance.","4.25-5.25","","5","null"
+"3468","{""Q0"":5}","survey-likert","35","185212","0.0-3.0-0.32","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","303","Your grandmother took care of that for you.","2.25-3.25","","6","null"
+"5758","{""Q0"":4}","survey-likert","36","190971","0.0-3.0-0.33","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","790","Matt replaced the receiver and returned to Sue.",">5.25","","5","null"
+"4939","{""Q0"":2}","survey-likert","37","195912","0.0-3.0-0.34","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","779","Something lead singers in rock bands wouldn't get.",">5.25","","3","null"
+"2201","{""Q0"":5}","survey-likert","38","198115","0.0-3.0-0.35","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","8","Are you sure you want to do this?","<2.25","","6","null"
+"2919","{""Q0"":5}","survey-likert","39","201035","0.0-3.0-0.36","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","241","She was working as quickly as she could.","2.25-3.25","","6","null"
+"4228","{""Q0"":3}","survey-likert","40","205265","0.0-3.0-0.37","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","777","A spark of compassion changed her friend's expression.",">5.25","","4","null"
+"10693","{""Q0"":2}","survey-likert","41","215959","0.0-3.0-0.38","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","355","I can blow smoke out of my ears.","3.25-4.25","","3","null"
+"4256","{""Q0"":3}","survey-likert","42","220217","0.0-3.0-0.39","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","732","They both pushed up, eyes meeting with worry.",">5.25","","4","null"
+"3723","{""Q0"":5}","survey-likert","43","223942","0.0-3.0-0.40","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","196","You need to have a friend with you.","2.25-3.25","","6","null"
+"2318","{""Q0"":5}","survey-likert","44","226261","0.0-3.0-0.41","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","attention_check_40","This is an attention check. Please click 6.","attention_check","6","6","true"
+"4762","{""Q0"":4}","survey-likert","45","231025","0.0-3.0-0.42","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","644","The sound of the loud television startles me.",">5.25","","5","null"
+"3568","{""Q0"":5}","survey-likert","46","234596","0.0-3.0-0.43","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","170","It was going to be a fun night.","2.25-3.25","","6","null"
+"2276","{""Q0"":5}","survey-likert","47","236873","0.0-3.0-0.44","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","292","What kind of a connection could that be?","2.25-3.25","","6","null"
+"2049","{""Q0"":6}","survey-likert","48","238925","0.0-3.0-0.45","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","122","Do you really expect me to believe that?","<2.25","","7","null"
+"6116","{""Q0"":2}","survey-likert","49","245042","0.0-3.0-0.46","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","641","But her brittle smile remained stubbornly in place.",">5.25","","3","null"
+"2599","{""Q0"":5}","survey-likert","50","247643","0.0-3.0-0.47","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","102","For a moment, they stared at each other.","<2.25","","6","null"
+"4262","{""Q0"":5}","survey-likert","51","251908","0.0-3.0-0.48","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","473","That's always been a point in their favor.","3.25-4.25","","6","null"
+"2817","{""Q0"":5}","survey-likert","52","254727","0.0-3.0-0.49","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","770","A second helicopter appeared over the Lincoln Memorial.",">5.25","","6","null"
+"2922","{""Q0"":5}","survey-likert","53","257650","0.0-3.0-0.50","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","243","At the top of my lungs, I screamed.","2.25-3.25","","6","null"
+"4525","{""Q0"":2}","survey-likert","54","262177","0.0-3.0-0.51","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","715","This fanaticism and this exhibitionism, I would ban.",">5.25","","3","null"
+"2702","{""Q0"":5}","survey-likert","55","264882","0.0-3.0-0.52","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","315","I don't see how it can be avoided.","2.25-3.25","","6","null"
+"2641","{""Q0"":5}","survey-likert","56","267524","0.0-3.0-0.53","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","201","During the day, I listened to the kids.","2.25-3.25","","6","null"
+"2605","{""Q0"":6}","survey-likert","57","270131","0.0-3.0-0.54","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","293","I see the way you look at me.","2.25-3.25","","7","null"
+"6906","{""Q0"":1}","survey-likert","58","277040","0.0-3.0-0.55","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","440","A recitation by the farmer in the dell.","3.25-4.25","","2","null"
+"3483","{""Q0"":4}","survey-likert","59","280524","0.0-3.0-0.56","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","487","He opened it and inspected the precious content.","4.25-5.25","","5","null"
+"2698","{""Q0"":2}","survey-likert","60","283223","0.0-3.0-0.57","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","389","Then the cave yawned in front of them.","3.25-4.25","","3","null"
+"2900","{""Q0"":5}","survey-likert","61","286126","0.0-3.0-0.58","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","13","What am I supposed to do with this?","<2.25","","6","null"
+"4028","{""Q0"":4}","survey-likert","62","290156","0.0-3.0-0.59","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","323","Finally, I slapped a hand over my eyes.","3.25-4.25","","5","null"
+"5199","{""Q0"":0}","survey-likert","63","295358","0.0-3.0-0.60","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","670","A raw consolation halfway out of studio habitat.",">5.25","","1","null"
+"4113","{""Q0"":4}","survey-likert","64","299473","0.0-3.0-0.61","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","520","Both the bands now wear a designated uniform.","4.25-5.25","","5","null"
+"2321","{""Q0"":4}","survey-likert","65","301797","0.0-3.0-0.62","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","attention_check_60","This is an attention check. Please click 5.","attention_check","5","5","true"
+"3895","{""Q0"":5}","survey-likert","66","305694","0.0-3.0-0.63","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","601","Jack dressed up a bit for the evening.","4.25-5.25","","6","null"
+"2940","{""Q0"":6}","survey-likert","67","308635","0.0-3.0-0.64","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","112","They couldn't get out of here fast enough.","<2.25","","7","null"
+"5503","{""Q0"":5}","survey-likert","68","314141","0.0-3.0-0.65","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","639","You park half a mile from the club.","4.25-5.25","","6","null"
+"9180","{""Q0"":2}","survey-likert","69","323323","0.0-3.0-0.66","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","613","It probably was hard getting into our company.","4.25-5.25","","3","null"
+"2494","{""Q0"":4}","survey-likert","70","325819","0.0-3.0-0.67","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","463","I'm guessing she went somewhere and forgot it.","3.25-4.25","","5","null"
+"4845","{""Q0"":5}","survey-likert","71","330666","0.0-3.0-0.68","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","694","I agreed with the campaign against invalid voting",">5.25","","6","null"
+"2157","{""Q0"":5}","survey-likert","72","332825","0.0-3.0-0.69","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","272","We'd be here for the next ten years.","2.25-3.25","","6","null"
+"3417","{""Q0"":6}","survey-likert","73","336244","0.0-3.0-0.70","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","183","Exercise is a great way to relieve stress.","2.25-3.25","","7","null"
+"2353","{""Q0"":5}","survey-likert","74","338598","0.0-3.0-0.71","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","128","You still haven't figured it out, have you?","<2.25","","6","null"
+"7474","{""Q0"":2}","survey-likert","75","346075","0.0-3.0-0.72","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","358","The feeling was exquisite, unique and indescribably serene.","3.25-4.25","","3","null"
+"2196","{""Q0"":4}","survey-likert","76","348273","0.0-3.0-0.73","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","318","I was supposed to send this to you.","2.25-3.25","","5","null"
+"3047","{""Q0"":5}","survey-likert","77","351322","0.0-3.0-0.74","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","353","I needed to focus on here and now.","3.25-4.25","","6","null"
+"3351","{""Q0"":2}","survey-likert","78","354676","0.0-3.0-0.75","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","611","Came the morrow, and nothing was sorted out.","4.25-5.25","","3","null"
+"3047","{""Q0"":6}","survey-likert","79","357725","0.0-3.0-0.76","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","190","We stood at the top of the hill.","2.25-3.25","","7","null"
+"2935","{""Q0"":4}","survey-likert","80","360661","0.0-3.0-0.77","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","566","Sylvia felt caught off guard by that question.","4.25-5.25","","5","null"
+"2071","{""Q0"":5}","survey-likert","81","362735","0.0-3.0-0.78","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","370","She grew up in a very musical household.","3.25-4.25","","6","null"
+"4885","{""Q0"":5}","survey-likert","82","367623","0.0-3.0-0.79","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","245","She puts her arm about her daughter's shoulder.","2.25-3.25","","6","null"
+"2933","{""Q0"":5}","survey-likert","83","370558","0.0-3.0-0.80","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","182","I'll be around for a few more days.","2.25-3.25","","6","null"
+"3610","{""Q0"":6}","survey-likert","84","374171","0.0-3.0-0.81","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","476","You've just entered into a very profitable arrangement.","3.25-4.25","","7","null"
+"3189","{""Q0"":5}","survey-likert","85","377362","0.0-3.0-0.82","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","796","Was he remembering what such tenderness felt like?",">5.25","","6","null"
+"3153","{""Q0"":2}","survey-likert","86","380517","0.0-3.0-0.83","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","630","Her issues are a complete opposite of yours.","4.25-5.25","","3","null"
+"4749","{""Q0"":4}","survey-likert","87","385267","0.0-3.0-0.84","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","545","That season the team finished as the seventh.","4.25-5.25","","5","null"
+"3765","{""Q0"":0}","survey-likert","88","389034","0.0-3.0-0.85","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","792","A new aircraft parking apron was also constructed.",">5.25","","1","null"
+"3650","{""Q0"":5}","survey-likert","89","392686","0.0-3.0-0.86","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","71","Are you sure you know what you're doing?","<2.25","","6","null"
+"3396","{""Q0"":4}","survey-likert","90","396085","0.0-3.0-0.87","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","507","Daniel bowed his head in a slight nod.","4.25-5.25","","5","null"
+"2211","{""Q0"":5}","survey-likert","91","398298","0.0-3.0-0.88","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","46","I had no idea what I was doing.","<2.25","","6","null"
+"2540","{""Q0"":4}","survey-likert","92","400840","0.0-3.0-0.89","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","366","It was, she decided, quite a nice feeling.","3.25-4.25","","5","null"
+"3491","{""Q0"":4}","survey-likert","93","404333","0.0-3.0-0.90","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","659","The answering grin from both boys was electric.",">5.25","","5","null"
+"4143","{""Q0"":5}","survey-likert","94","408478","0.0-3.0-0.91","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","259","You have to be experienced to do this.","2.25-3.25","","6","null"
+"2677","{""Q0"":5}","survey-likert","95","411158","0.0-3.0-0.92","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","310","What brings you here so late at night?","2.25-3.25","","6","null"
+"3338","{""Q0"":4}","survey-likert","96","414498","0.0-3.0-0.93","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","338","Someone stepped on her heel, tripping her up.","3.25-4.25","","5","null"
+"5279","{""Q0"":4}","survey-likert","97","419779","0.0-3.0-0.94","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","765","Many election officials even declined to show up.",">5.25","","5","null"
+"2107","{""Q0"":5}","survey-likert","98","421888","0.0-3.0-0.95","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","173","There's something cool about that, don't you think?","2.25-3.25","","6","null"
+"2807","{""Q0"":4}","survey-likert","99","424697","0.0-3.0-0.96","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","407","Again, he was unable to find the fragment.","3.25-4.25","","5","null"
+"2917","{""Q0"":5}","survey-likert","100","427616","0.0-3.0-0.97","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","419","My pride has taken the best of me.","3.25-4.25","","6","null"
+"2280","{""Q0"":6}","survey-likert","101","429898","0.0-3.0-0.98","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","144","Why won't you tell me what's going on?","<2.25","","7","null"
+"6324","{""Q0"":1}","survey-likert","102","436224","0.0-3.0-0.99","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","66","May I presume to ask you a question?","<2.25","","2","null"
+"2222","{""Q0"":5}","survey-likert","103","438448","0.0-3.0-0.100","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","175","Just at that moment, the lights went out.","2.25-3.25","","6","null"
+"2346","{""Q0"":5}","survey-likert","104","440797","0.0-3.0-0.101","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","6","May I speak to you for a moment?","<2.25","","6","null"
+"4526","{""Q0"":4}","survey-likert","105","445325","0.0-3.0-0.102","659c067de92634488b349626","","[0]","","8","1","How much does the sentence make sense?","769","It is best if I curb my craving.",">5.25","","5","null"
