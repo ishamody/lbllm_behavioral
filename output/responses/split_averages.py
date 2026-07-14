@@ -105,7 +105,7 @@ plt.plot(
 
 plt.xlabel("Average rating (Half 1)")
 plt.ylabel("Average rating (Half 2)")
-plt.title("Split-half reliability across all lists (Plausibility)")
+plt.title("Split-half reliability across all lists (Physical States)")
 
 plt.xlim(1,7)
 plt.ylim(1,7)

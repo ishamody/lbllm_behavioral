@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.0"></script>
   <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.0"></script>
 
   <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet">
 
@@ -36,7 +37,9 @@
 <body>
 <script>
 const jsPsych = initJsPsych();
-const subject_id = jsPsych.randomization.randomID(10);
+let prolific_id = "";
+let filename = "";
+const is_test = true;
 
 // EXPERIMENT QUESTION
 const experiment_question = {
@@ -46,9 +49,8 @@ const experiment_question = {
   right_label: 'very much'
 };
 
-// RANDOMLY ASSIGN ONE LIST
-const assigned_list = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7,8],1)[0];
-const filename = `q${experiment_question.qnum}_${subject_id}.csv`;
+// current assigned list 1
+const assigned_list = 1;
 
 // LOAD CSV
 async function loadCSV(file) {
@@ -64,9 +66,33 @@ async function loadCSV(file) {
 // BUILD EXPERIMENT
 async function buildExperiment() {
   const timeline = [];
-  // LOAD STIMULI
-  const stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
+  // PROLIFIC ID
+  timeline.push({
+    type: jsPsychSurveyText,
+    questions: [
+      {
+        prompt: "Please copy and paste your Prolific ID below.",
+        required: true
+      }
+    ],
+    button_label: "Continue",
+    on_finish: function(data) {
+      prolific_id = data.response.Q0.trim();
 
+      filename = `q${experiment_question.qnum}_list${assigned_list}_${prolific_id}.csv`;
+      console.log("name of file:", filename);
+
+      jsPsych.data.addProperties({
+        prolific_id: prolific_id
+      });
+    }
+  });
+  // LOAD STIMULI
+  if (is_test){
+    stimuli = await loadCSV(`stimuli/lists/test_list.csv`);
+  } else {
+    stimuli = await loadCSV(`stimuli/lists/list_${assigned_list}.csv`);
+  }
   // CONSENT
   timeline.push({
       type: jsPsychHtmlButtonResponse,
@@ -119,11 +145,14 @@ async function buildExperiment() {
       <h1>Exp4: Sentence Rating Experiment</h1>
 
       <p>
-        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence according to how much it made you think of places, natural scenes and/or environments on a scale from 1 (not at all) to 7 (very much).
+        In this survey, you will be asked to rate 100 sentences. We would like you to rate each sentence according to <strong>how much it made you think of places, natural scenes and/or environments</strong> on a scale from 1 (not at all) to 7 (very much).
       </p>
 
       <p>
         For example, sentences like “There are several tall trees in the backyard.” or “They walked to the end of the hallway.” have meanings that are related to places, natural scenes and/or environments, so you might rate them as a 6 or a 7. In contrast, sentences like “You are very attentive and curious.” or “Wool is a type of textile fiber.” do not, so you might rate them as a 1 or a 2.
+      </p>
+      <p>
+      There will also be a few attention checks. Please select the rating indicated in the prompt.
       </p>
     `,
     choices: ['Start']
@@ -134,8 +163,15 @@ async function buildExperiment() {
 
   for (let i = 0; i < stimuli.length; i++) {
     fullTimelineVariables.push(stimuli[i]);
+    let attention_check_indices;
+    if (is_test){
+      attention_check_indices = [1];
+    } else{
+      // attention checks after 20, 40, 60 //
+      attention_check_indices = [19, 39, 59];
+    }
     // attention checks after 20, 40, 60
-    if ([19, 39, 59].includes(i)) {
+    if (attention_check_indices.includes(i)) {
       const correct_number = jsPsych.randomization.sampleWithoutReplacement([1,2,3,4,5,6,7], 1)[0];
       fullTimelineVariables.push({
         sentence_id: `attention_check_${i+1}`,
@@ -176,7 +212,7 @@ async function buildExperiment() {
     ],
 
     data: {
-      participant_id: subject_id,
+      participant_id: prolific_id,
       assigned_list: assigned_list,
       assigned_question_number: experiment_question.qnum,
       assigned_question_text: experiment_question.label,
@@ -243,7 +279,7 @@ async function buildExperiment() {
     type: jsPsychPipe,
     action: 'save',
     experiment_id: 'PV4am1NwjDYl', //TODO
-    filename: filename,
+    filename: () =>  filename, //important
     data_string: () =>
       jsPsych.data.get().csv()
   });
@@ -257,6 +293,11 @@ async function buildExperiment() {
       <p>
         Thank you for participating.
       </p>
+      <p>Your completion code is:</p>
+
+      <h1>CDKIIX9L</h1>
+
+      <p>Please copy this code and submit it to receive credit/payment.</p>
     `,
     choices: ['Finish']
   });
